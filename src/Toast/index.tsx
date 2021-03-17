@@ -94,7 +94,8 @@ const DEFAULT_PROPS: ToastConfig = {
     alignItems: 'center'
   },
   hideCloseIcon: false,
-  hasCustomImage: false
+  hasCustomImage: false,
+  customImage: {},
 }
 
 export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
