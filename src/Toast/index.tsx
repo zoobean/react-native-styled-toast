@@ -3,7 +3,7 @@ import { Animated, TouchableOpacity, Vibration } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import Box, { BoxProps } from '../Box'
 import Icon from '../Icon'
-import { Accent, Heading, IconCont, StyledToast, StyledToastProps, SubText, TextProps } from './styles'
+import { Accent, Heading, IconCont, StyledToast, StyledToastProps, SubText, TextProps, ImageProps } from './styles'
 
 type IconFamilies =
   | 'Entypo'
@@ -45,6 +45,8 @@ export type ToastConfig = {
   toastStyles?: StyledToastProps
   hideCloseIcon?: boolean
   iconSize?: number
+  customImage: ImageProps
+  hasCustomImage: boolean
 }
 
 const statusBarHeight = getStatusBarHeight()
@@ -91,7 +93,8 @@ const DEFAULT_PROPS: ToastConfig = {
     borderRadius: 4,
     alignItems: 'center'
   },
-  hideCloseIcon: false
+  hideCloseIcon: false,
+  hasCustomImage: false
 }
 
 export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
@@ -122,7 +125,9 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
   hideAccent,
   closeButtonStyles,
   hideCloseIcon,
-  iconSize
+  iconSize,
+  customImage,
+  hasCustomImage,
 }) => {
   const isSuccess = intent === 'SUCCESS'
   const isInfo = intent === 'INFO'
@@ -218,6 +223,18 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
         )}
       </Box>
       {!hideCloseIcon && (
+        <TouchableOpacity onPress={() => onClose && id && onClose(id)}>
+          <Box {...Object.assign({}, DEFAULT_PROPS.closeButtonStyles, closeButtonStyles)}>
+            <Icon
+              size={closeIconSize || 20}
+              family={closeIconFamily || 'Feather'}
+              name={closeIconName || 'x'}
+              color={closeIconColor}
+            />
+          </Box>
+        </TouchableOpacity>
+      )}
+      {hasCustomImage && (
         <TouchableOpacity onPress={() => onClose && id && onClose(id)}>
           <Box {...Object.assign({}, DEFAULT_PROPS.closeButtonStyles, closeButtonStyles)}>
             <Icon
