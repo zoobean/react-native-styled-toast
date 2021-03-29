@@ -84,8 +84,6 @@ export const Accent = styled.View<ColorProps>`
 
 export type TextProps = SpaceProps & ColorProps & TextAlignProps & FontSizeProps
 
-export type ImageProps = SpaceProps & ColorProps & TextAlignProps & FontSizeProps
-
 export const Heading = styled.Text<TextProps>`
   ${space};
   ${color};
@@ -121,6 +119,12 @@ export const IconCont = styled.View<SpaceProps>`
 `
 
 export const CloseButtonCont = styled.TouchableOpacity<SpaceProps>`
+  ${space};
+  align-items: center;
+  justify-content: center;
+`
+
+export const ImageCont = styled.View<SpaceProps>`
   ${space};
   align-items: center;
   justify-content: center;

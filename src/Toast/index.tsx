@@ -3,7 +3,8 @@ import { Animated, TouchableOpacity, Vibration } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import Box, { BoxProps } from '../Box'
 import Icon from '../Icon'
-import { Accent, Heading, IconCont, StyledToast, StyledToastProps, SubText, TextProps, ImageProps } from './styles'
+import CustomImage from '../Image'
+import { Accent, Heading, IconCont, StyledToast, StyledToastProps, SubText, TextProps, ImageCont } from './styles'
 
 type IconFamilies =
   | 'Entypo'
@@ -45,8 +46,15 @@ export type ToastConfig = {
   toastStyles?: StyledToastProps
   hideCloseIcon?: boolean
   iconSize?: number
-  customImage: ImageProps
+  customImage: string
   hasCustomImage: boolean
+  hasArrowButton?: boolean
+  onPressArrow?: () => void
+  arrowButtonStyles?: BoxProps
+  arrowIconColor?: string
+  arrowIconFamily?: IconFamilies
+  arrowIconName?: string
+  arrowIconSize?: number
 }
 
 const statusBarHeight = getStatusBarHeight()
@@ -95,7 +103,15 @@ const DEFAULT_PROPS: ToastConfig = {
   },
   hideCloseIcon: false,
   hasCustomImage: false,
-  customImage: {},
+  customImage: '',
+  hasArrowButton: false,
+  onPressArrow: () => false,
+  arrowButtonStyles: {
+    p: 2,
+    mx: 2,
+    borderRadius: 4,
+    alignItems: 'center'
+  }
 }
 
 export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
@@ -129,6 +145,13 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
   iconSize,
   customImage,
   hasCustomImage,
+  hasArrowButton,
+  onPressArrow,
+  arrowIconSize,
+  arrowIconFamily,
+  arrowIconColor,
+  arrowIconName,
+  arrowButtonStyles
 }) => {
   const isSuccess = intent === 'SUCCESS'
   const isInfo = intent === 'INFO'
@@ -211,6 +234,13 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
           />
         </IconCont>
       )}
+
+      {hasCustomImage && (
+        <ImageCont px={4}>
+          <CustomImage size={20} customImage={customImage} />
+        </ImageCont>
+      )}
+
       <Box alignItems="flex-start" flex={1} pl={hideIcon ? 4 : 0} pr={!!subMessage ? 2 : 0} py={2}>
         <Box flexDirection="row" flexWrap="wrap" flex={1}>
           <Heading color={color} {...messageProps}>
@@ -235,14 +265,14 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
           </Box>
         </TouchableOpacity>
       )}
-      {hasCustomImage && (
-        <TouchableOpacity onPress={() => onClose && id && onClose(id)}>
-          <Box {...Object.assign({}, DEFAULT_PROPS.closeButtonStyles, closeButtonStyles)}>
+      {hasArrowButton && (
+        <TouchableOpacity onPress={() => onPressArrow && onPressArrow()}>
+          <Box {...Object.assign({}, DEFAULT_PROPS.arrowButtonStyles, arrowButtonStyles)}>
             <Icon
-              size={closeIconSize || 20}
-              family={closeIconFamily || 'Feather'}
-              name={closeIconName || 'x'}
-              color={closeIconColor}
+              size={arrowIconSize || 20}
+              family={arrowIconFamily || 'MaterialCommunityIcons'}
+              name={arrowIconName || 'chevron-right'}
+              color={arrowIconColor}
             />
           </Box>
         </TouchableOpacity>
