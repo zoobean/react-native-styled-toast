@@ -25,7 +25,7 @@ const CustomImage: React.FC<ImageProps> = (props) => {
   }
   return (
     <View>
-      <Image source={images.confetti} resizeMode="contain" style={[{ height: props.size, width: props.size }]} />
+      <Image source={images.happy} resizeMode="contain" style={[{ height: props.size, width: props.size }]} />
     </View>
   )
 }
