@@ -237,7 +237,7 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
 
       {hasCustomImage && (
         <ImageCont px={4}>
-          <CustomImage size={20} customImage={customImage} />
+          <CustomImage size={24} customImage={customImage} />
         </ImageCont>
       )}
 
