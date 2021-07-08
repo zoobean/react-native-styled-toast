@@ -80,7 +80,7 @@ const shadow = {
 }
 
 const DEFAULT_PROPS: ToastConfig = {
-  duration: 3000,
+  duration: 5000,
   intent: 'SUCCESS',
   onPress: () => false,
   shouldVibrate: false,
