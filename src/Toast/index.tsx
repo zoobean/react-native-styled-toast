@@ -49,7 +49,6 @@ export type ToastConfig = {
   customImage: string
   hasCustomImage: boolean
   hasArrowButton?: boolean
-  onPressArrow?: () => void
   arrowButtonStyles?: BoxProps
   arrowIconColor?: string
   arrowIconFamily?: IconFamilies
@@ -105,7 +104,6 @@ const DEFAULT_PROPS: ToastConfig = {
   hasCustomImage: false,
   customImage: '',
   hasArrowButton: false,
-  onPressArrow: () => false,
   arrowButtonStyles: {
     p: 2,
     mx: 2,
@@ -146,7 +144,6 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
   customImage,
   hasCustomImage,
   hasArrowButton,
-  onPressArrow,
   arrowIconSize,
   arrowIconFamily,
   arrowIconColor,
@@ -237,7 +234,7 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
 
       {hasCustomImage && (
         <ImageCont px={4}>
-          <CustomImage size={20} customImage={customImage} />
+          <CustomImage size={24} customImage={customImage} />
         </ImageCont>
       )}
 
@@ -266,7 +263,7 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
         </TouchableOpacity>
       )}
       {hasArrowButton && (
-        <TouchableOpacity onPress={() => onPressArrow && onPressArrow()}>
+        <TouchableOpacity onPress={() => onPress && onPress()}>
           <Box {...Object.assign({}, DEFAULT_PROPS.arrowButtonStyles, arrowButtonStyles)}>
             <Icon
               size={arrowIconSize || 20}
