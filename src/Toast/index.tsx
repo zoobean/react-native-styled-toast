@@ -79,7 +79,7 @@ const shadow = {
 }
 
 const DEFAULT_PROPS: ToastConfig = {
-  duration: 5000,
+  duration: 7000,
   intent: 'SUCCESS',
   onPress: () => false,
   shouldVibrate: false,
@@ -263,7 +263,12 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
         </TouchableOpacity>
       )}
       {hasArrowButton && (
-        <TouchableOpacity onPress={() => onPress && onPress()}>
+        <TouchableOpacity
+          onPress={() => {
+            onPress && onPress()
+            onClose && id && onClose(id)
+          }}
+        >
           <Box {...Object.assign({}, DEFAULT_PROPS.arrowButtonStyles, arrowButtonStyles)}>
             <Icon
               size={arrowIconSize || 20}
