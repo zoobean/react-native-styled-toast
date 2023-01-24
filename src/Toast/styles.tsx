@@ -123,3 +123,9 @@ export const CloseButtonCont = styled.TouchableOpacity<SpaceProps>`
   align-items: center;
   justify-content: center;
 `
+
+export const ImageCont = styled.View<SpaceProps>`
+  ${space};
+  align-items: center;
+  justify-content: center;
+`

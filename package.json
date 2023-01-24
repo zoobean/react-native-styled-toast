@@ -12,7 +12,8 @@
     "prepare": "yarn build",
     "prettier": "prettier \"**/*.+(js|jsx|json|css|scss|ts|tsx)\"",
     "release": "npm publish",
-    "test": "jest"
+    "test": "jest",
+    "postbuild": "rsync -avum --include='*.png' --include='*/' --exclude='*' './src/' './dist'"
   },
   "keywords": [
     "toast",
