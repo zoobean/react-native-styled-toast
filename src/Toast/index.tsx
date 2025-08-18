@@ -107,6 +107,7 @@ const DEFAULT_PROPS: ToastConfig = {
   hideCloseIcon: false,
   allowFontScaling: true,
   hasCustomImage: false,
+  customImage: {},
 }
 
 export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
