@@ -3,7 +3,7 @@ import { Animated, TouchableOpacity, Vibration } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import Box, { BoxProps } from '../Box'
 import Icon from '../Icon'
-import { Accent, Heading, IconCont, StyledToast, StyledToastProps, SubText, TextProps } from './styles'
+import { Accent, Heading, IconCont, StyledToast, StyledToastProps, SubText, TextProps, ImageProps } from './styles'
 
 type IconFamilies =
   | 'Entypo'
@@ -56,6 +56,8 @@ export type ToastConfig = {
     shadowRadius?: number
     elevation?: number
   }
+  customImage: ImageProps
+  hasCustomImage: boolean
 }
 
 const statusBarHeight = getStatusBarHeight()
@@ -103,7 +105,8 @@ const DEFAULT_PROPS: ToastConfig = {
     alignItems: 'center'
   },
   hideCloseIcon: false,
-  allowFontScaling: true
+  allowFontScaling: true,
+  hasCustomImage: false,
 }
 
 export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
@@ -136,7 +139,9 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
   hideCloseIcon,
   iconSize,
   allowFontScaling,
-  shadow = shadowDefault
+  shadow = shadowDefault,
+  customImage,
+  hasCustomImage,
 }) => {
   const isSuccess = intent === 'SUCCESS'
   const isInfo = intent === 'INFO'
@@ -232,6 +237,18 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
         )}
       </Box>
       {!hideCloseIcon && (
+        <TouchableOpacity onPress={() => onClose && id && onClose(id)}>
+          <Box {...Object.assign({}, DEFAULT_PROPS.closeButtonStyles, closeButtonStyles)}>
+            <Icon
+              size={closeIconSize || 20}
+              family={closeIconFamily || 'Feather'}
+              name={closeIconName || 'x'}
+              color={closeIconColor}
+            />
+          </Box>
+        </TouchableOpacity>
+      )}
+      {hasCustomImage && (
         <TouchableOpacity onPress={() => onClose && id && onClose(id)}>
           <Box {...Object.assign({}, DEFAULT_PROPS.closeButtonStyles, closeButtonStyles)}>
             <Icon
