@@ -46,6 +46,17 @@ export type ToastConfig = {
   toastStyles?: StyledToastProps
   hideCloseIcon?: boolean
   iconSize?: number
+  allowFontScaling?: boolean
+  shadow?: {
+    shadowColor?: string
+    shadowOffset?: {
+      width: number
+      height: number
+    }
+    shadowOpacity?: number
+    shadowRadius?: number
+    elevation?: number
+  }
   customImage: string
   hasCustomImage: boolean
   hasArrowButton?: boolean
@@ -67,7 +78,7 @@ export type ToastInternalConfig = {
 
 const offset = statusBarHeight + 16
 
-const shadow = {
+const shadowDefault = {
   shadowColor: '#000',
   shadowOffset: {
     width: 0,
@@ -101,6 +112,7 @@ const DEFAULT_PROPS: ToastConfig = {
     alignItems: 'center'
   },
   hideCloseIcon: false,
+  allowFontScaling: true,
   hasCustomImage: false,
   customImage: '',
   hasArrowButton: false,
@@ -141,6 +153,8 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
   closeButtonStyles,
   hideCloseIcon,
   iconSize,
+  allowFontScaling,
+  shadow = shadowDefault,
   customImage,
   hasCustomImage,
   hasArrowButton,
@@ -240,12 +254,12 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
 
       <Box alignItems="flex-start" flex={1} pl={hideIcon ? 4 : 0} pr={!!subMessage ? 2 : 0} py={2}>
         <Box flexDirection="row" flexWrap="wrap" flex={1}>
-          <Heading color={color} {...messageProps}>
+          <Heading color={color} {...messageProps} allowFontScaling={allowFontScaling}>
             {message}
           </Heading>
         </Box>
         {!!subMessage && (
-          <SubText color={color} mt={1} {...subMessageProps}>
+          <SubText color={color} mt={1} {...subMessageProps} allowFontScaling={allowFontScaling}>
             {subMessage}
           </SubText>
         )}
