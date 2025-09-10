@@ -214,7 +214,7 @@ export const Toast: React.FC<ToastConfig & ToastInternalConfig> = ({
       case 'scale':
         return { transform: [{ scale }], opacity, ...shadow }
       default:
-        return { transform: [{ translateY }, { scale }], ...shadow }
+        return { transform: [{ translateY }], ...shadow }
     }
   }
 
